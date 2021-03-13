@@ -415,6 +415,12 @@ public class MainFrame extends JFrame {
             windowStyleMultipleMenuItem.setSelected(true);
         }
 
+        JMenu mnClient = new JMenu(Translations.getString("Menu.Client")); 
+        mnClient.add(connectionSetupAction);
+        mnClient.add(connectAction);
+        mnClient.add(disconnectAction);
+        menuBar.add(mnClient);
+        
         // Help
         /////////////////////////////////////////////////////////////////////
         JMenu mnHelp = new JMenu(Translations.getString("Menu.Help")); //$NON-NLS-1$
@@ -1231,6 +1237,45 @@ public class MainFrame extends JFrame {
                   "Please restart OpenPnP for the changes to take effect."); //$NON-NLS-1$
       }
     }
+    
+
+    private Action connectionSetupAction = new AbstractAction(Translations.getString("Menu.Client.Setup")) { //$NON-NLS-1$
+        {
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+        	ConnectionsDialog dialog = new ConnectionsDialog();
+            dialog.setModal(true);
+            dialog.setSize(620, 720);
+            dialog.setLocationRelativeTo(MainFrame.get());
+            dialog.setVisible(true);
+        }
+    };
+    
+    private Action connectAction = new AbstractAction(Translations.getString("Menu.Client.Connect")) { //$NON-NLS-1$
+        {
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            about();
+        }
+    };
+    
+    private Action disconnectAction = new AbstractAction(Translations.getString("Menu.Client.Disconnect")) { //$NON-NLS-1$
+        {
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            about();
+        }
+    };
+    
     
     private JPanel panelStatusAndDros;
     private JLabel droLbl;
