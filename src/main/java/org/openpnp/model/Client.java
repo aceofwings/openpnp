@@ -3,6 +3,7 @@ package org.openpnp.model;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import org.pmw.tinylog.Logger;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,7 +20,6 @@ public class Client   extends AbstractModelObject{
         return instance;
     }
     
-    // .send 
     public static void connect(String uri) throws URISyntaxException {
     	cc = new WebSocketClient(new URI(uri)) {
     		
@@ -40,9 +40,11 @@ public class Client   extends AbstractModelObject{
 
               @Override
               public void onError(Exception ex) {
-
-            }
+            	ex.printStackTrace();
+              }
     	};
+    	
+    	cc.connect();
     }
     
     public static void disconnect() {

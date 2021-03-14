@@ -6,15 +6,23 @@ import java.awt.Container;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.openpnp.model.Client;
+import org.pmw.tinylog.Logger;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.net.URISyntaxException;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class ConnectionsDialog extends JDialog {
     private final JPanel contentPanel = new JPanel();
-    private final JTextField uriField = new JTextField();
-    private JTextField textField;
+    private JTextField uriField;
 
     public ConnectionsDialog() {
         setTitle("Client Setup");
@@ -30,12 +38,25 @@ public class ConnectionsDialog extends JDialog {
         JLabel lblNewLabel = new JLabel("Host / IP");
         panel.add(lblNewLabel);
         
-        textField = new JTextField();
-        panel.add(textField);
-        textField.setColumns(20);
+        uriField = new JTextField();
+        panel.add(uriField);
+        uriField.setColumns(20);
         
-        JButton btnNewButton = new JButton("Connect");
-        panel.add(btnNewButton);
- 
+        JButton connectButton = new JButton("Connect");
+        connectButton.addActionListener(connectAction);
+        panel.add(connectButton);
     }
+    
+    public Action connectAction  = new AbstractAction("Connect") {
+    	  public void actionPerformed(ActionEvent arg0) {
+    	     Logger.debug("Performing Connection");
+    	     try {
+
+				Client.connect(uriField.getText());
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+          }
+    };
 }
